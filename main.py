@@ -19,26 +19,30 @@ symbol_values={
     "D":2,
 
 }
+# Function to check if the player has won and calculate the winnings
 def check_winning(columns,lines,bet,values):
     winnings=0
     winning_lines=[]
     for line in range(lines):
         symbol=columns[0][line]
+        # Check if the symbols in the current line match
         for column in columns:
             symbol_to_check=column[line]
             if symbol!=symbol_to_check :
                 break
+    # If all symbols match, calculate winnings and add to winning lines
     else:
         winnings+=values[symbol]*bet
         winning_lines.append(line+1)
     return winnings,winning_lines    
-
+# Function to get a random spin result for the slot machine
 def get_slot_machine_spin(rows,cols,symbols):
     all_symbols=[]
     for symbol,symbol_count in symbols.items():
         for _ in range(symbol_count):
             all_symbols.append(symbol)
     columns=[]
+    # Generate random symbols for each column and row
     for _ in range(cols):
         column=[]
         current_symbols=all_symbols[:]
@@ -56,7 +60,9 @@ def print_slot_machine_columns(columns):
                 print(column[row],end=" | ")
             else:
                 print(column[row],end="")
-        print()        
+        print()  
+
+# Function to prompt the user for a deposit amount      
 def deposite():
     while True:
         amount=input("What would you like to deposite? $")
@@ -70,6 +76,7 @@ def deposite():
             print ("Invalid input, please enter a number")
         
     return amount 
+# Function to get the number of lines the player wants to bet on
 def get_lines_number():
     while True:
         lines = input("How many lines of service do you want for this deposit? (1-"+str(MAX_LINES) +")?") 
@@ -83,6 +90,7 @@ def get_lines_number():
             print ("Please enter a number")
         
     return lines 
+# Function to get the bet amount per line from the player
 def get_bet():
     while True:
         bet = input("How much would you like to bet per line? ")
@@ -96,13 +104,14 @@ def get_bet():
             print ("Please enter a number")
         
     return bet
-                                                                                        
+# Function to simulate a spin of the slot machine                                                                                    
 def spin():
     balance=deposite()
     lines=get_lines_number()
     while True:
        bet=get_bet()
        total_bet=bet*lines
+       # Check if the player has enough balance to place the bet
        if total_bet>balance:
            print(f"You don't have enough to bet that amount, your current balance is ${balance}")
        else:
@@ -115,6 +124,7 @@ def spin():
     print(f"You won ${winnings}.")
     print(f"You won  on lines: ",*winning_lines)
     return winnings-total_bet
+# Main function to execute the slot machine game
 def main():    
     balance=deposite()
     while True:
